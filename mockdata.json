@@ -1,0 +1,332 @@
+[
+    {
+      "projectName": "Everything Everywhere All at Once",
+      "photoExtension": "eea",
+      "projectType": "Feature Film",
+      "genre": "Science Fiction",
+      "budget": 20000000,
+      "generateReceiptsWalletID": "0xeEaAo12345abcdef",
+      "appleTVProjectID": "ATV1001",
+      "netflixProjectID": null,
+      "primeVideoProjectID": "PVP2001",
+      "huluProjectID": null,
+      "youtubeProjectLink": "https://youtube.com/watch?v=eeao1",
+      "nbcProjectID": null,
+      "castAndCrew": [
+        {
+          "name": "Alex Smith",
+          "points": 10,
+          "walletAddress": "0xaS1eEaAo12345abcdef"
+        },
+        {
+          "name": "Jane Doe",
+          "points": 8,
+          "walletAddress": "0xjD2eEaAo12345abcdef"
+        }
+      ],
+      "dailyResidualPayments": [
+        {
+          "date": "2023-12-01",
+          "payments": [
+            {
+              "name": "Alex Smith",
+              "amount": 500
+            },
+            {
+              "name": "Jane Doe",
+              "amount": 400
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "projectName": "Minari",
+      "photoExtension": "min",
+      "projectType": "Feature Film",
+      "genre": "Drama",
+      "budget": 10000000,
+      "generateReceiptsWalletID": "0xmInAri12345abcdef",
+      "appleTVProjectID": null,
+      "netflixProjectID": "NF3002",
+      "primeVideoProjectID": null,
+      "huluProjectID": "HL2002",
+      "youtubeProjectLink": "https://youtube.com/watch?v=minari2",
+      "nbcProjectID": "NBC4002",
+      "castAndCrew": [
+        {
+          "name": "Emily Chen",
+          "points": 12,
+          "walletAddress": "0xeC3mInAri12345abcdef"
+        },
+        {
+          "name": "Michael Rodriguez",
+          "points": 9,
+          "walletAddress": "0xmR4mInAri12345abcdef"
+        }
+      ],
+      "dailyResidualPayments": [
+        {
+          "date": "2023-12-02",
+          "payments": [
+            {
+              "name": "Emily Chen",
+              "amount": 550
+            },
+            {
+              "name": "Michael Rodriguez",
+              "amount": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "projectName": "X",
+        "photoExtension": "/xxx",
+        "projectType": "Feature Film",
+        "genre": "Horror",
+        "budget": 15000000,
+        "generateReceiptsWalletID": "0xXMovie12345abcdef",
+        "appleTVProjectID": null,
+        "netflixProjectID": "NF3003",
+        "primeVideoProjectID": "PVP2003",
+        "huluProjectID": null,
+        "youtubeProjectLink": "https://youtube.com/watch?v=xmovie3",
+        "nbcProjectID": null,
+        "castAndCrew": [
+          {
+            "name": "Sarah Johnson",
+            "points": 11,
+            "walletAddress": "0xsJ5XMovie12345abcdef"
+          },
+          {
+            "name": "Tom Allen",
+            "points": 7,
+            "walletAddress": "0xtA6XMovie12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-03",
+            "payments": [
+              {
+                "name": "Sarah Johnson",
+                "amount": 600
+              },
+              {
+                "name": "Tom Allen",
+                "amount": 350
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "projectName": "Pearl",
+        "photoExtension": "pea",
+        "projectType": "Feature Film",
+        "genre": "Drama",
+        "budget": 12000000,
+        "generateReceiptsWalletID": "0xPearl12345abcdef",
+        "appleTVProjectID": null,
+        "netflixProjectID": "NF3004",
+        "primeVideoProjectID": "PVP2004",
+        "huluProjectID": "HL2004",
+        "youtubeProjectLink": "https://youtube.com/watch?v=pearl4",
+        "nbcProjectID": "NBC4004",
+        "castAndCrew": [
+          {
+            "name": "Lisa White",
+            "points": 9,
+            "walletAddress": "0xlW7Pearl12345abcdef"
+          },
+          {
+            "name": "Mark Brown",
+            "points": 6,
+            "walletAddress": "0xmB8Pearl12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-04",
+            "payments": [
+              {
+                "name": "Lisa White",
+                "amount": 530
+              },
+              {
+                "name": "Mark Brown",
+                "amount": 300
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "projectName": "The Inspection",
+        "photoExtension": "ins",
+        "projectType": "Feature Film",
+        "genre": "Drama",
+        "budget": 18000000,
+        "generateReceiptsWalletID": "0xTheInspect12345abcdef",
+        "appleTVProjectID": "ATV1005",
+        "netflixProjectID": null,
+        "primeVideoProjectID": "PVP2005",
+        "huluProjectID": null,
+        "youtubeProjectLink": "https://youtube.com/watch?v=theinspection5",
+        "nbcProjectID": "NBC4005",
+        "castAndCrew": [
+          {
+            "name": "Kevin Turner",
+            "points": 13,
+            "walletAddress": "0xkT9TheInspect12345abcdef"
+          },
+          {
+            "name": "Rachel Green",
+            "points": 10,
+            "walletAddress": "0xrG0TheInspect12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-05",
+            "payments": [
+              {
+                "name": "Kevin Turner",
+                "amount": 650
+              },
+              {
+                "name": "Rachel Green",
+                "amount": 500
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "projectName": "God's Creatures",
+        "photoExtension": "gcr",
+        "projectType": "Feature Film",
+        "genre": "Thriller",
+        "budget": 13500000,
+        "generateReceiptsWalletID": "0xGodsCreat12345abcdef",
+        "appleTVProjectID": null,
+        "netflixProjectID": "NF3006",
+        "primeVideoProjectID": null,
+        "huluProjectID": "HL2006",
+        "youtubeProjectLink": "https://youtube.com/watch?v=godscreatures6",
+        "nbcProjectID": null,
+        "castAndCrew": [
+          {
+            "name": "Diana Brooks",
+            "points": 11,
+            "walletAddress": "0xdB1GodsCreat12345abcdef"
+          },
+          {
+            "name": "Eric Johnson",
+            "points": 8,
+            "walletAddress": "0xeJ2GodsCreat12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-06",
+            "payments": [
+              {
+                "name": "Diana Brooks",
+                "amount": 550
+              },
+              {
+                "name": "Eric Johnson",
+                "amount": 400
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "projectName": "Marcel the Shell with Shoes On",
+        "photoExtension": "mar",
+        "projectType": "Animated Film",
+        "genre": "Family",
+        "budget": 8000000,
+        "generateReceiptsWalletID": "0xMarcelShell12345abcdef",
+        "appleTVProjectID": "ATV1007",
+        "netflixProjectID": null,
+        "primeVideoProjectID": null,
+        "huluProjectID": "HL2007",
+        "youtubeProjectLink": "https://youtube.com/watch?v=marcelshell7",
+        "nbcProjectID": null,
+        "castAndCrew": [
+          {
+            "name": "Amy Garcia",
+            "points": 14,
+            "walletAddress": "0xaG3MarcelShell12345abcdef"
+          },
+          {
+            "name": "Oscar White",
+            "points": 7,
+            "walletAddress": "0xoW4MarcelShell12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-07",
+            "payments": [
+              {
+                "name": "Amy Garcia",
+                "amount": 700
+              },
+              {
+                "name": "Oscar White",
+                "amount": 350
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "projectName": "Causeway",
+        "photoExtension": "cau",
+        "projectType": "Feature Film",
+        "genre": "Drama",
+        "budget": 9500000,
+        "generateReceiptsWalletID": "0xCauseway12345abcdef",
+        "appleTVProjectID": null,
+        "netflixProjectID": "NF3008",
+        "primeVideoProjectID": "PVP2008",
+        "huluProjectID": null,
+        "youtubeProjectLink": "https://youtube.com/watch?v=causeway8",
+        "nbcProjectID": "NBC4008",
+        "castAndCrew": [
+          {
+            "name": "Laura Black",
+            "points": 12,
+            "walletAddress": "0xlB5Causeway12345abcdef"
+          },
+          {
+            "name": "Daniel Ray",
+            "points": 9,
+            "walletAddress": "0xdR6Causeway12345abcdef"
+          }
+        ],
+        "dailyResidualPayments": [
+          {
+            "date": "2023-12-08",
+            "payments": [
+              {
+                "name": "Laura Black",
+                "amount": 600
+              },
+              {
+                "name": "Daniel Ray",
+                "amount": 450
+              }
+            ]
+          }
+        ]
+      }
+    
+      
+]
