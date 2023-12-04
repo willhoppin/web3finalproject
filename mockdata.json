@@ -83,7 +83,7 @@
     },
     {
         "projectName": "X",
-        "photoExtension": "/xxx",
+        "photoExtension": "xxx",
         "projectType": "Feature Film",
         "genre": "Horror",
         "budget": 15000000,
