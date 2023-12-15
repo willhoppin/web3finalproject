@@ -123,6 +123,7 @@ export default function Home() {
   if (showCreateMovieForm) {
     return (
       <div className="bg-white text-black p-24">
+        <button className="mb-4 py-2 px-4 border rounded-lg bg-gray-400 text-white" onClick={() => setShowCreateMovieForm(false)}>Back</button>
         <h2 className="text-blue-500 font-bold text-xl">Create New Project</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input type="text" name="projectName" placeholder="Project Name" className="p-2 border rounded-lg mb-2 mt-4" onChange={(event) => handleNewMovieChange(event)} required />
@@ -182,7 +183,7 @@ export default function Home() {
               <div key={index} className="flex flex-col mb-6">
                 <input type="text" name="name" placeholder="Name" className="p-2 border rounded-lg mb-2" value={member.name} onChange={(event) => handleCastMemberChange(index, event)} required />
                 <input type="number" name="points" placeholder="Points" className="p-2 border rounded-lg mb-2" value={member.points} onChange={(event) => handleCastMemberChange(index, event)} required />
-                <input type="text" name="walletAddress" placeholder="Wallet Address" className="p-2 border rounded-lg" value={member.walletAddress} onChange={(event) => handleCastMemberChange(index, event)} required />
+                <input type="text" name="walletAddress" placeholder="ETH Wallet Address" className="p-2 border rounded-lg" value={member.walletAddress} onChange={(event) => handleCastMemberChange(index, event)} required />
               </div>
             ))}
             <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCastMember}>Add Cast Member</button>
@@ -190,7 +191,7 @@ export default function Home() {
 
           <button type="submit" className="my-2 p-2 border rounded-lg bg-green-500 text-white">Create Movie</button>
         </form>
-        <button className="mt-4 p-2 border rounded-lg bg-red-500 text-white" onClick={() => setShowCreateMovieForm(false)}>Cancel</button>
+        <button className="mt-4 px-4 py-2 border rounded-lg bg-red-500 text-white" onClick={() => setShowCreateMovieForm(false)}>Cancel</button>
       </div>
     );
 }
