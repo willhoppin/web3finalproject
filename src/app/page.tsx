@@ -87,11 +87,11 @@ export default function Home() {
 
   if (showCreateMovieForm) {
     return (
-      <div className="bg-white text-black">
-        <h2>New Movie</h2>
+      <div className="bg-white text-black p-24">
+        <h2 className="text-blue-500 font-bold text-xl">Create New Project</h2>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-          <input type="text" name="projectName" placeholder="Project Name" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Photo Extension" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="projectName" placeholder="Project Name" className="p-2 border rounded-lg mb-2 mt-4" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="photoExtension" placeholder="Photo URL" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
           {/* Additional Fields */}
           <select name="typeOfProject" onChange={(event) => handleNewMovieChange(event)} required>
