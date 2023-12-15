@@ -26,12 +26,12 @@ interface Movie {
   genre: string;
   budget: number;
   generateReceiptsWalletID: string;
-  appleTVProjectID: string | null;
-  netflixProjectID: string | null;
-  primeVideoProjectID: string | null;
-  huluProjectID: string | null;
+  appleTVProjectID: string;
+  netflixProjectID: string;
+  primeVideoProjectID: string;
+  huluProjectID: string;
   youtubeProjectLink: string;
-  nbcProjectID: string | null;
+  nbcProjectID: string;
   castAndCrew: CastAndCrewMember[];
   dailyResidualPayments: DailyPayment[];
 }

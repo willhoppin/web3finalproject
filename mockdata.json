@@ -7,11 +7,11 @@
       "budget": 20000000,
       "generateReceiptsWalletID": "0xeEaAo12345abcdef",
       "appleTVProjectID": "ATV1001",
-      "netflixProjectID": null,
+      "netflixProjectID": "None",
       "primeVideoProjectID": "PVP2001",
-      "huluProjectID": null,
+      "huluProjectID": "None",
       "youtubeProjectLink": "https://youtube.com/watch?v=eeao1",
-      "nbcProjectID": null,
+      "nbcProjectID": "None",
       "castAndCrew": [
         {
           "name": "Alex Smith",
@@ -49,7 +49,7 @@
       "generateReceiptsWalletID": "0xmInAri12345abcdef",
       "appleTVProjectID": "ATV1002",
       "netflixProjectID": "NF3002",
-      "primeVideoProjectID": null,
+      "primeVideoProjectID": "None",
       "huluProjectID": "HL2002",
       "youtubeProjectLink": "https://youtube.com/watch?v=minari2",
       "nbcProjectID": "NBC4002",
@@ -91,9 +91,9 @@
         "appleTVProjectID": "ATV1003",
         "netflixProjectID": "NF3003",
         "primeVideoProjectID": "PVP2003",
-        "huluProjectID": null,
+        "huluProjectID": "None",
         "youtubeProjectLink": "https://youtube.com/watch?v=xmovie3",
-        "nbcProjectID": null,
+        "nbcProjectID": "None",
         "castAndCrew": [
           {
             "name": "Sarah Johnson",
@@ -171,9 +171,9 @@
         "budget": 18000000,
         "generateReceiptsWalletID": "0xTheInspect12345abcdef",
         "appleTVProjectID": "ATV1005",
-        "netflixProjectID": null,
+        "netflixProjectID": "None",
         "primeVideoProjectID": "PVP2005",
-        "huluProjectID": null,
+        "huluProjectID": "None",
         "youtubeProjectLink": "https://youtube.com/watch?v=theinspection5",
         "nbcProjectID": "NBC4005",
         "castAndCrew": [
@@ -213,10 +213,10 @@
         "generateReceiptsWalletID": "0xGodsCreat12345abcdef",
         "appleTVProjectID": "ATV1006",
         "netflixProjectID": "NF3006",
-        "primeVideoProjectID": null,
+        "primeVideoProjectID": "None",
         "huluProjectID": "HL2006",
         "youtubeProjectLink": "https://youtube.com/watch?v=godscreatures6",
-        "nbcProjectID": null,
+        "nbcProjectID": "None",
         "castAndCrew": [
           {
             "name": "Diana Brooks",
@@ -253,11 +253,11 @@
         "budget": 8000000,
         "generateReceiptsWalletID": "0xMarcelShell12345abcdef",
         "appleTVProjectID": "ATV1007",
-        "netflixProjectID": null,
-        "primeVideoProjectID": null,
+        "netflixProjectID": "None",
+        "primeVideoProjectID": "None",
         "huluProjectID": "HL2007",
         "youtubeProjectLink": "https://youtube.com/watch?v=marcelshell7",
-        "nbcProjectID": null,
+        "nbcProjectID": "None",
         "castAndCrew": [
           {
             "name": "Amy Garcia",
@@ -296,7 +296,7 @@
         "appleTVProjectID": "ATV1008",
         "netflixProjectID": "NF3008",
         "primeVideoProjectID": "PVP2008",
-        "huluProjectID": null,
+        "huluProjectID": "None",
         "youtubeProjectLink": "https://youtube.com/watch?v=causeway8",
         "nbcProjectID": "NBC4008",
         "castAndCrew": [
