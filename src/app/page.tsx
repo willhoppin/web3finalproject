@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
 import mockData from '../../mockdata.json'; // Importing the mock data
 
 interface Payment {
@@ -218,11 +219,11 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <h2 className="text-2xl font-bold mt-4">Residual Payments To Date</h2>
+        <h2 className="text-2xl font-bold mt-4">Residual Payments</h2>
         <ul>
           {selectedMovie.dailyResidualPayments.map(day => (
             <li key={day.date}>
-              <strong>{day.date}</strong> - Total Payments: {calculateTotalResiduals([day])} ETH
+              <strong>As of {day.date}</strong> - Total Payments: {calculateTotalResiduals([day])} ETH
               <ul>
                 {day.payments.map(payment => (
                   <li key={payment.name}>
@@ -242,33 +243,40 @@ export default function Home() {
   
 
   return (
-    <main className="flex min-h-screen flex-col justify-between px-24 pb-24 text-gray-800 bg-white">
-      <Image
-        src={"/images/logo.png"}
-        alt="logo"
-        width={220}
-        height={100}
-        className="mb-16 mt-10"
-      />
-      <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
-        Create New Project
-      </button>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {mockData.map((movie: Movie) => (
-          <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
-            <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
-            <Image
-              src={`/images/${movie.photoExtension}.png`}
-              alt={movie.projectName}
-              width={100}
-              height={100}
-              className="rounded-xl mb-2"
-            />
-            <p>Total Paid: {calculateTotalResiduals(movie.dailyResidualPayments).toLocaleString()} ETH</p>
-            {/* Add additional movie details here as needed */}
-          </div>
-        ))}
-      </div>
-    </main>
+    <ThirdwebProvider
+      clientId={process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID}
+      activeChain="ethereum"
+    >
+      <main className="flex min-h-screen flex-col justify-between px-24 pb-24 text-gray-800 bg-white">
+        <div className="flex justify-between mb-16 mt-10">
+          <Image
+            src={"/images/logo.png"}
+            alt="logo"
+            width={320}
+            height={100}
+          />
+          <ConnectWallet className="" theme="dark" />
+        </div>
+        <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
+          Create New Project
+        </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {mockData.map((movie: Movie) => (
+            <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
+              <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
+              <Image
+                src={`/images/${movie.photoExtension}.png`}
+                alt={movie.projectName}
+                width={100}
+                height={100}
+                className="rounded-xl mb-2"
+              />
+              <p>Total Paid: {calculateTotalResiduals(movie.dailyResidualPayments).toLocaleString()} ETH</p>
+              {/* Add additional movie details here as needed */}
+            </div>
+          ))}
+        </div>
+      </main>
+    </ThirdwebProvider>
   );  
 }
