@@ -22,9 +22,20 @@ interface CastAndCrewMember {
 interface Movie {
   projectName: string;
   photoExtension: string;
-  dailyResidualPayments: DailyPayment[];
+  projectType: string;
+  genre: string;
+  budget: number;
+  generateReceiptsWalletID: string;
+  appleTVProjectID: string | null;
+  netflixProjectID: string | null;
+  primeVideoProjectID: string | null;
+  huluProjectID: string | null;
+  youtubeProjectLink: string;
+  nbcProjectID: string | null;
   castAndCrew: CastAndCrewMember[];
+  dailyResidualPayments: DailyPayment[];
 }
+
 
 export default function Home() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
