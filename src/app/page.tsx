@@ -41,11 +41,55 @@ export default function Home() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showCreateMovieForm, setShowCreateMovieForm] = useState(false);
   const [newMovie, setNewMovie] = useState<Movie | null>(null);
+  const initialCastMember = { name: '', points: 0, walletAddress: '' }; // Default cast member
+  const [castMembers, setCastMembers] = useState<CastAndCrewMember[]>([initialCastMember]);
+  const [crewMembers, setCrewMembers] = useState<CastAndCrewMember[]>([]);
+
+  const addCrewMember = () => {
+    const newCrewMember = { name: '', points: 0, walletAddress: '' };
+    setCrewMembers([...crewMembers, newCrewMember]);
+  };
+
+  const handleCrewMemberChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedCrewMembers = [...crewMembers];
+    updatedCrewMembers[index] = {
+      ...updatedCrewMembers[index],
+      [event.target.name]: event.target.value
+    };
+    setCrewMembers(updatedCrewMembers);
+  };
 
   const calculateTotalResiduals = (dailyResidualPayments: DailyPayment[]) => {
     return dailyResidualPayments.reduce((total, day) => (
       total + day.payments.reduce((dayTotal: number, payment) => dayTotal + payment.amount, 0)
     ), 0);
+  };
+
+  const addCastMember = () => {
+    const newCastMember = { name: '', points: 0, walletAddress: '' };
+    setCastMembers([...castMembers, newCastMember]);
+  };
+
+  const handleCastMemberChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedCastMembers = [...castMembers];
+    updatedCastMembers[index] = {
+      ...updatedCastMembers[index],
+      [event.target.name]: event.target.value
+    };
+    setCastMembers(updatedCastMembers);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newMovie) {
+      const movieWithCast = {
+        ...newMovie,
+        castAndCrew: castMembers
+      };
+      handleCreateMovie(movieWithCast);
+      setNewMovie(null);
+      setCastMembers([]);
+    }
   };
 
   const calculateIndividualPayment = (name: string) => {
@@ -74,15 +118,6 @@ export default function Home() {
       ...newMovie,
       [name]: value
     } as Movie);
-  };
-  
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newMovie) {
-      handleCreateMovie(newMovie);
-      setNewMovie(null);
-    }
   };
 
   if (showCreateMovieForm) {
@@ -141,16 +176,17 @@ export default function Home() {
           </select>
 
           {/* Dynamic Fields for Cast */}
+          <h2 className="text-blue-500 mt-8 mb-2 font-bold text-xl">Cast Members</h2>
           <div id="castContainer" className="flex flex-col">
-            {/* Fields for each cast member */}
+            {castMembers.map((member, index) => (
+              <div key={index} className="flex flex-col mb-6">
+                <input type="text" name="name" placeholder="Name" className="p-2 border rounded-lg mb-2" value={member.name} onChange={(event) => handleCastMemberChange(index, event)} required />
+                <input type="number" name="points" placeholder="Points" className="p-2 border rounded-lg mb-2" value={member.points} onChange={(event) => handleCastMemberChange(index, event)} required />
+                <input type="text" name="walletAddress" placeholder="Wallet Address" className="p-2 border rounded-lg" value={member.walletAddress} onChange={(event) => handleCastMemberChange(index, event)} required />
+              </div>
+            ))}
+            <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCastMember}>Add Cast Member</button>
           </div>
-          <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCastMember}>Add Cast Member</button>
-
-          {/* Dynamic Fields for Crew */}
-          <div id="crewContainer" className="flex flex-col">
-            {/* Fields for each crew member */}
-          </div>
-          <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCrewMember}>Add Crew Member</button>
 
           <button type="submit" className="my-2 p-2 border rounded-lg bg-green-500 text-white">Create Movie</button>
         </form>
@@ -158,17 +194,6 @@ export default function Home() {
       </div>
     );
 }
-
-
-// Placeholder functions for adding cast and crew members
-function addCastMember() {
-    // Your logic to add a new cast member field
-}
-
-function addCrewMember() {
-    // Your logic to add a new crew member field
-}
-
 
 
   if (selectedMovie) {
