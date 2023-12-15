@@ -66,12 +66,16 @@ export default function Home() {
     setShowCreateMovieForm(false);
   };
 
-  const handleNewMovieChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNewMovieChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const value = e.target.value;
+    const name = e.target.name;
+  
     setNewMovie({
       ...newMovie,
-      [e.target.name]: e.target.value
+      [name]: value
     } as Movie);
   };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
