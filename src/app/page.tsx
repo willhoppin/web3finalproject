@@ -89,40 +89,57 @@ export default function Home() {
     return (
       <div className="bg-white text-black p-24">
         <h2 className="text-blue-500 font-bold text-xl">Create New Project</h2>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <input type="text" name="projectName" placeholder="Project Name" className="p-2 border rounded-lg mb-2 mt-4" onChange={(event) => handleNewMovieChange(event)} required />
           <input type="text" name="photoExtension" placeholder="Photo URL" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
           {/* Additional Fields */}
-          <select name="typeOfProject" onChange={(event) => handleNewMovieChange(event)} required>
-            {/* Options for type of project */}
+          <select name="typeOfProject" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required>
+            <option value="">Select Film Type</option>
+            <option value="featureFilm">Feature Film</option>
+            <option value="featureDoc">Feature Documentary</option>
+            <option value="docSeries">Documentary Series</option>
+            <option value="tvSeries">TV Series</option>
+            <option value="shortFilm">Short Film</option>
+            <option value="tvMovie">TV Movie</option>
           </select>
-          <select name="genre" onChange={(event) => handleNewMovieChange(event)} required>
-            {/* Options for genre */}
+
+          <select name="genre" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required>
+            <option value="">Select Genre</option>
+            <option value="western">Western</option>
+            <option value="sciFi">Sci-Fi</option>
+            <option value="horror">Horror</option>
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="romance">Romance</option>
+            <option value="adventure">Adventure</option>
+            <option value="drama">Drama</option>
+            <option value="other">Other</option>
           </select>
+
           <div>
             {/* Distribution methods as checkboxes */}
           </div>
-          <select name="primaryDistributionMethod" onChange={(event) => handleNewMovieChange(event)} required>
+          <select name="primaryDistributionMethod" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required>
             {/* Options for primary distribution method */}
           </select>
-          <input type="number" name="budget" placeholder="Budget" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="number" name="budget" placeholder="Budget" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
           {/* Dynamic Fields for Cast */}
-          <div id="castContainer" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div id="castContainer" className="flex flex-col">
             {/* Fields for each cast member */}
           </div>
-          <button type="button" onClick={addCastMember}>Add Cast Member</button>
+          <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCastMember}>Add Cast Member</button>
 
           {/* Dynamic Fields for Crew */}
-          <div id="crewContainer" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div id="crewContainer" className="flex flex-col">
             {/* Fields for each crew member */}
           </div>
-          <button type="button" onClick={addCrewMember}>Add Crew Member</button>
+          <button type="button" className="my-2 p-2 border rounded-lg bg-blue-500 text-white" onClick={addCrewMember}>Add Crew Member</button>
 
-          <button type="submit">Create Movie</button>
+          <button type="submit" className="my-2 p-2 border rounded-lg bg-green-500 text-white">Create Movie</button>
         </form>
-        <button onClick={() => setShowCreateMovieForm(false)}>Cancel</button>
+        <button className="mt-4 p-2 border rounded-lg bg-red-500 text-white" onClick={() => setShowCreateMovieForm(false)}>Cancel</button>
       </div>
     );
 }
