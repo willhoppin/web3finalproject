@@ -45,11 +45,28 @@ export default function CreateMovieForm() {
     }
   };
 
-  const handleMemberChange = (index: number, type: 'cast' | 'crew', key: keyof CastCrewMember, value: string | number) => {
+  const handleMemberStringChange = (
+    index: number,
+    type: 'cast' | 'crew',
+    key: 'name' | 'walletAddress',
+    value: string
+  ) => {
     const updatedMembers = type === 'cast' ? [...cast] : [...crew];
     updatedMembers[index][key] = value;
     type === 'cast' ? setCast(updatedMembers) : setCrew(updatedMembers);
   };
+  
+  const handleMemberNumberChange = (
+    index: number,
+    type: 'cast' | 'crew',
+    key: 'points',
+    value: number
+  ) => {
+    const updatedMembers = type === 'cast' ? [...cast] : [...crew];
+    updatedMembers[index][key] = value;
+    type === 'cast' ? setCast(updatedMembers) : setCrew(updatedMembers);
+  };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,27 +107,67 @@ export default function CreateMovieForm() {
         <h3>Cast</h3>
         {cast.map((member, index) => (
           <div key={index}>
-            <input type="text" value={member.name} onChange={e => handleMemberChange(index, 'cast', 'name', e.target.value)} placeholder="Name" />
-            <input type="number" value={member.points} onChange={e => handleMemberChange(index, 'cast', 'points', Number(e.target.value))} placeholder="Points" />
-            <input type="text" value={member.walletAddress} onChange={e => handleMemberChange(index, 'cast', 'walletAddress', e.target.value)} placeholder="Wallet Address" />
-            {cast.length > 1 && <button type="button" onClick={() => handleRemoveMember(index, 'cast')}>Remove</button>}
+            <input
+              type="text"
+              value={member.name}
+              onChange={e => handleMemberStringChange(index, 'cast', 'name', e.target.value)}
+              placeholder="Name"
+            />
+            <input
+              type="number"
+              value={member.points}
+              onChange={e => handleMemberNumberChange(index, 'cast', 'points', Number(e.target.value))}
+              placeholder="Points"
+            />
+            <input
+              type="text"
+              value={member.walletAddress}
+              onChange={e => handleMemberStringChange(index, 'cast', 'walletAddress', e.target.value)}
+              placeholder="Wallet Address"
+            />
+            {cast.length > 1 && (
+              <button type="button" onClick={() => handleRemoveMember(index, 'cast')}>
+                Remove
+              </button>
+            )}
           </div>
         ))}
         <button type="button" onClick={() => handleAddMember('cast')}>Add Cast Member</button>
       </div>
 
+
       <div>
         <h3>Crew</h3>
         {crew.map((member, index) => (
           <div key={index}>
-            <input type="text" value={member.name} onChange={e => handleMemberChange(index, 'crew', 'name', e.target.value)} placeholder="Name" />
-            <input type="number" value={member.points} onChange={e => handleMemberChange(index, 'crew', 'points', Number(e.target.value))} placeholder="Points" />
-            <input type="text" value={member.walletAddress} onChange={e => handleMemberChange(index, 'crew', 'walletAddress', e.target.value)} placeholder="Wallet Address" />
-            {crew.length > 1 && <button type="button" onClick={() => handleRemoveMember(index, 'crew')}>Remove</button>}
+            <input
+              type="text"
+              value={member.name}
+              onChange={e => handleMemberStringChange(index, 'crew', 'name', e.target.value)}
+              placeholder="Name"
+            />
+            <input
+              type="number"
+              value={member.points}
+              onChange={e => handleMemberNumberChange(index, 'crew', 'points', Number(e.target.value))}
+              placeholder="Points"
+            />
+            <input
+              type="text"
+              value={member.walletAddress}
+              onChange={e => handleMemberStringChange(index, 'crew', 'walletAddress', e.target.value)}
+              placeholder="Wallet Address"
+            />
+            {crew.length > 1 && (
+              <button type="button" onClick={() => handleRemoveMember(index, 'crew')}>
+                Remove
+              </button>
+            )}
           </div>
         ))}
         <button type="button" onClick={() => handleAddMember('crew')}>Add Crew Member</button>
       </div>
+
 
       <button type="submit">Create Movie</button>
     </form>

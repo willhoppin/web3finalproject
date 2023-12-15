@@ -160,7 +160,7 @@ function addCrewMember() {
             </li>
           ))}
         </ul>
-        <h2 className="text-2xl font-bold mt-4">Daily Residual Payments</h2>
+        <h2 className="text-2xl font-bold mt-4">Residual Payments To Date</h2>
         <ul>
           {selectedMovie.dailyResidualPayments.map(day => (
             <li key={day.date}>
