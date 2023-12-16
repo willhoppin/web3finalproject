@@ -238,7 +238,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold mb-5">{selectedMovie.projectName}</h1>
         <div>
           <Image
-            src={`/images/${selectedMovie.photoExtension}.png`}
+            src={selectedMovie.photoUrl}
             alt={selectedMovie.projectName}
             width={200}
             height={200}
@@ -253,6 +253,8 @@ export default function Home() {
           ))}
         </ul>
         <h2 className="text-2xl font-bold mt-4">Residual Payments</h2>
+        <h2 className="italic font-bold mt-4">NOTE: ADD STUFF HERE FROM CHAIN...</h2>
+        {/* Dynamic Fields for Cast 
         <ul>
           {selectedMovie.dailyResidualPayments.map(day => (
             <li key={day.date}>
@@ -267,6 +269,7 @@ export default function Home() {
             </li>
           ))}
         </ul>
+        */}
         <button onClick={() => setSelectedMovie(null)} className="mt-5 bg-gray-200 py-2 px-4 rounded hover:bg-gray-300">
           Back
         </button>
