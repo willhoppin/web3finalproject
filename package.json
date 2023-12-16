@@ -12,6 +12,7 @@
     "@thirdweb-dev/react": "^4.1.16",
     "@thirdweb-dev/sdk": "^4.0.22",
     "ethers": "^5.7.2",
+    "firebase": "^10.7.1",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"

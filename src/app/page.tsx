@@ -1,8 +1,26 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
 import mockData from '../../mockdata.json'; // Importing the mock data
+import { initializeApp } from "firebase/app";
+import { getFirestore } from 'firebase/firestore';
+import { getAnalytics } from "firebase/analytics";
+import { collection, getDocs, DocumentData } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyATNt-j2Xd9xinTWFO8xUyQ8oo5eMhMS0I",
+  authDomain: "streamchain-d3d99.firebaseapp.com",
+  projectId: "streamchain-d3d99",
+  storageBucket: "streamchain-d3d99.appspot.com",
+  messagingSenderId: "425791006395",
+  appId: "1:425791006395:web:f279473bcdf3e258646b9e",
+  measurementId: "G-CCBBNSPQML"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 interface Payment {
   name: string;
@@ -22,7 +40,7 @@ interface CastAndCrewMember {
 
 interface Movie {
   projectName: string;
-  photoExtension: string;
+  photoUrl: string;
   projectType: string;
   genre: string;
   budget: number;
@@ -45,6 +63,21 @@ export default function Home() {
   const initialCastMember = { name: '', points: 0, walletAddress: '' }; // Default cast member
   const [castMembers, setCastMembers] = useState<CastAndCrewMember[]>([initialCastMember]);
   const [crewMembers, setCrewMembers] = useState<CastAndCrewMember[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const querySnapshot = await getDocs(collection(db, "movies"));
+      const moviesArray: Movie[] = []; 
+      querySnapshot.forEach((doc: DocumentData) => {
+        // Ensure that the data structure from Firestore matches your Movie interface
+        moviesArray.push({ id: doc.id, ...doc.data() } as Movie);
+      });
+      setMovies(moviesArray);
+    };
+
+    fetchMovies();
+  }, []);
 
   const addCrewMember = () => {
     const newCrewMember = { name: '', points: 0, walletAddress: '' };
@@ -247,12 +280,12 @@ export default function Home() {
       clientId={process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID}
       activeChain="ethereum"
     >
-      <main className="flex min-h-screen flex-col justify-between px-24 pb-24 text-gray-800 bg-white">
+      <main className="flex min-h-screen flex-col px-24 pb-24 text-gray-800 bg-white">
         <div className="flex justify-between mb-16 mt-10">
           <Image
             src={"/images/logo.png"}
             alt="logo"
-            width={320}
+            width={400}
             height={100}
           />
           <ConnectWallet className="" theme="dark" />
@@ -261,18 +294,17 @@ export default function Home() {
           Create New Project
         </button>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {mockData.map((movie: Movie) => (
+          {movies.map((movie) => (
             <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
               <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
               <Image
-                src={`/images/${movie.photoExtension}.png`}
+                src={movie.photoUrl}
                 alt={movie.projectName}
                 width={100}
                 height={100}
                 className="rounded-xl mb-2"
               />
-              <p>Total Paid: {calculateTotalResiduals(movie.dailyResidualPayments).toLocaleString()} ETH</p>
-              {/* Add additional movie details here as needed */}
+              <p>Total Paid: 0 ETH</p>
             </div>
           ))}
         </div>
