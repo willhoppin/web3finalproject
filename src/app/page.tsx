@@ -5,8 +5,8 @@ import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
 import mockData from '../../mockdata.json'; // Importing the mock data
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from "firebase/analytics";
 import { collection, getDocs, DocumentData } from 'firebase/firestore';
+import { addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyATNt-j2Xd9xinTWFO8xUyQ8oo5eMhMS0I",
@@ -84,14 +84,6 @@ export default function Home() {
     setCrewMembers([...crewMembers, newCrewMember]);
   };
 
-  const handleCrewMemberChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedCrewMembers = [...crewMembers];
-    updatedCrewMembers[index] = {
-      ...updatedCrewMembers[index],
-      [event.target.name]: event.target.value
-    };
-    setCrewMembers(updatedCrewMembers);
-  };
 
   const calculateTotalResiduals = (dailyResidualPayments: DailyPayment[]) => {
     return dailyResidualPayments.reduce((total, day) => (
@@ -112,19 +104,7 @@ export default function Home() {
     };
     setCastMembers(updatedCastMembers);
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newMovie) {
-      const movieWithCast = {
-        ...newMovie,
-        castAndCrew: castMembers
-      };
-      handleCreateMovie(movieWithCast);
-      setNewMovie(null);
-      setCastMembers([]);
-    }
-  };
+  
 
   const calculateIndividualPayment = (name: string) => {
     let totalPayment = 0;
@@ -138,11 +118,31 @@ export default function Home() {
     return totalPayment;
   };
 
-  const handleCreateMovie = (movie: Movie) => {
-    // Here you would send the movie to your backend to be added to the JSON file
-    mockData.push(movie); // Adding to the existing data for demo purposes
-    setShowCreateMovieForm(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newMovie) {
+      const movieToSubmit = {
+        ...newMovie,
+        castAndCrew: castMembers,  // Ensure all required fields are included
+        // Add other necessary fields from the form
+      };
+      handleCreateMovie(movieToSubmit as Movie);
+    }
   };
+  
+  const handleCreateMovie = async (movie: Movie) => {
+    try {
+      await addDoc(collection(db, "movies"), movie);
+      // After successful addition, fetch movies again or update the state
+      setShowCreateMovieForm(false);  // Close the form
+      setNewMovie(null);  // Reset form fields
+    } catch (error) {
+      console.error("Error adding movie: ", error);
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
+  
+  
 
   const handleNewMovieChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.value;
