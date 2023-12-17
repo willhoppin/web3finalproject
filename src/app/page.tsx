@@ -162,7 +162,7 @@ export default function Home() {
         <h2 className="text-blue-500 font-bold text-xl">Create New Project</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input type="text" name="projectName" placeholder="Project Name" className="p-2 border rounded-lg mb-2 mt-4" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoUrl" placeholder="Photo URL" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="photoUrl" placeholder="Photo URL (Wikipedia, Amazon, and most image domains supported)" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
           <input type="number" name="budget" placeholder="Budget (USD)" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
           {/* Additional Fields */}
