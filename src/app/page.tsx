@@ -46,6 +46,7 @@ interface Movie {
   budget: number;
   generateReceiptsWalletID: string;
   appleTVProjectID: string;
+  primaryDistMethod: string;
   netflixProjectID: string;
   primeVideoProjectID: string;
   huluProjectID: string;
@@ -123,11 +124,11 @@ export default function Home() {
     if (newMovie) {
       const movieToSubmit = {
         ...newMovie,
-        castAndCrew: castMembers,  // Ensure all required fields are included
-        // Add other necessary fields from the form
+        castAndCrew: castMembers
       };
       handleCreateMovie(movieToSubmit as Movie);
     }
+    window.location.reload()
   };
   
   const handleCreateMovie = async (movie: Movie) => {
@@ -161,8 +162,8 @@ export default function Home() {
         <h2 className="text-blue-500 font-bold text-xl">Create New Project</h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input type="text" name="projectName" placeholder="Project Name" className="p-2 border rounded-lg mb-2 mt-4" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Photo URL" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="number" name="photoExtension" placeholder="Budget (USD)" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="photoUrl" placeholder="Photo URL" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="number" name="budget" placeholder="Budget (USD)" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
           {/* Additional Fields */}
           <select name="typeOfProject" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required>
@@ -189,24 +190,20 @@ export default function Home() {
           </select>
 
           <h2 className="text-blue-500 mt-8 font-bold text-xl">Distribution Info</h2>
-          <input type="text" name="photoExtension" placeholder="General Receipts ETH Wallet ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Apple TV Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Netflix Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Prime Video Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Hulu Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="YouTube Link" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
-          <input type="text" name="photoExtension" placeholder="Cable (Broadcast) Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="generalReceiptsWalletID" placeholder="General Receipts ETH Wallet ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="appleTVProjectID" placeholder="Apple TV Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="netflixProjectID" placeholder="Netflix Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="primeVideoProjectID" placeholder="Prime Video Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="huluProjectID" placeholder="Hulu Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="youtubeProjectLink" placeholder="YouTube Link" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
+          <input type="text" name="nbcProjectID" placeholder="Cable (Broadcast) Project ID" className="p-2 border rounded-lg my-2" onChange={(event) => handleNewMovieChange(event)} required />
 
-          <select name="genre" className="p-2 border rounded-lg my-2" required>
+          <select name="primaryDistMethod" className="p-2 border rounded-lg my-2" required>
             <option value="">Select a Primary Distribution Method</option>
-            <option value="western">Western</option>
-            <option value="sciFi">Sci-Fi</option>
-            <option value="horror">Horror</option>
-            <option value="action">Action</option>
-            <option value="comedy">Comedy</option>
-            <option value="romance">Romance</option>
-            <option value="adventure">Adventure</option>
-            <option value="drama">Drama</option>
+            <option value="western">Streaming</option>
+            <option value="sciFi">Theatrical</option>
+            <option value="horror">Online Rental</option>
+            <option value="action">Cable</option>
             <option value="other">Other</option>
           </select>
 
