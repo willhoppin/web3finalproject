@@ -293,6 +293,23 @@ export default function Home() {
         <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
           Create New Project
         </button>
+        <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Your Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {movies.map((movie) => (
+            <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
+              <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
+              <Image
+                src={movie.photoUrl}
+                alt={movie.projectName}
+                width={100}
+                height={100}
+                className="rounded-xl mb-2"
+              />
+              <p>Total Paid: 0 ETH</p>
+            </div>
+          ))}
+        </div>
+        <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Global Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {movies.map((movie) => (
             <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
