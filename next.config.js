@@ -21,6 +21,7 @@ const nextConfig = {
         'media-exp1.licdn.com',
         'assets.website-files.com',
         'images.squarespace-cdn.com',
+        'media-prod.fangoria.com',
         'i.etsystatic.com',
         // ... add more domains as needed
       ],
