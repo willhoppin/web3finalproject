@@ -7,6 +7,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, DocumentData } from 'firebase/firestore';
 import { addDoc } from 'firebase/firestore';
+import { useAddress } from '@thirdweb-dev/react';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyATNt-j2Xd9xinTWFO8xUyQ8oo5eMhMS0I",
@@ -57,8 +59,7 @@ interface Movie {
   dailyResidualPayments: DailyPayment[];
 }
 
-
-export default function Home() {
+function AppContent() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showCreateMovieForm, setShowCreateMovieForm] = useState(false);
   const [newMovie, setNewMovie] = useState<Movie | null>(null);
@@ -66,6 +67,7 @@ export default function Home() {
   const [castMembers, setCastMembers] = useState<CastAndCrewMember[]>([initialCastMember]);
   const [crewMembers, setCrewMembers] = useState<CastAndCrewMember[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const walletAddress = useAddress();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -274,7 +276,6 @@ export default function Home() {
       </div>
     );
   }
-  
 
   return (
     <ThirdwebProvider
@@ -296,7 +297,7 @@ export default function Home() {
         </button>
         <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Your Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.filter(movie => movie.owner === '0xC4dA5CFeAcA98Bc7Cf41897F1E9384eD983FF34f').map((movie) => (
+          {movies.filter(movie => movie.owner === walletAddress).map((movie) => (
             <div
               key={movie.projectName}
               className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
@@ -316,7 +317,7 @@ export default function Home() {
         </div>
         <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Global Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.filter(movie => movie.owner !== '0xC4dA5CFeAcA98Bc7Cf41897F1E9384eD983FF34f').map((movie) => (
+          {movies.filter(movie => movie.owner !== walletAddress).map((movie) => (
             <div
               key={movie.projectName}
               className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
@@ -336,5 +337,17 @@ export default function Home() {
         </div>
       </main>
     </ThirdwebProvider>
-  );  
+  );
+}
+
+
+export default function Home() {
+  return (
+    <ThirdwebProvider
+      clientId={process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID}
+      activeChain="ethereum"
+    >
+      <AppContent />
+    </ThirdwebProvider>
+  );
 }
