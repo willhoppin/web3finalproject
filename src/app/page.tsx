@@ -86,7 +86,7 @@ interface Movie {
   dailyResidualPayments: DailyPayment[];
 }
 
-function isDomainAllowed(url) {
+function isDomainAllowed(url: string) {
   try {
     const domain = new URL(url).hostname;
     return acceptedDomains.includes(domain);
@@ -106,7 +106,7 @@ function AppContent() {
   const walletAddress = useAddress();
   const [contract, setContract] = useState<Contract | null>(null);
 
-  const renderImage = (url, alt, width, height) => {
+  const renderImage = (url: string, alt: string, width: number, height: number) => {
     if (isDomainAllowed(url)) {
       return <Image src={url} alt={alt} width={width} height={height} />;
     } else {
