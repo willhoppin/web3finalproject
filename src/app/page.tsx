@@ -319,7 +319,7 @@ export default function Home() {
           {movies.filter(movie => movie.owner !== '0xC4dA5CFeAcA98Bc7Cf41897F1E9384eD983FF34f').map((movie) => (
             <div
               key={movie.projectName}
-              className="rounded-lg border border-red-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
+              className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
               onClick={() => setSelectedMovie(movie)}
             >
               <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
