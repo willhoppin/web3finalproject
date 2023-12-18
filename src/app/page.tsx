@@ -1,5 +1,5 @@
 'use client';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import contractABI from '../../abi.json'; // Path to your contract's ABI
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
@@ -11,6 +11,31 @@ import { collection, getDocs, DocumentData } from 'firebase/firestore';
 import { addDoc } from 'firebase/firestore';
 import { useAddress } from '@thirdweb-dev/react';
 
+const CONTRACT_ADDRESS = '0x518fbcfb83832ff840c73f1f572937fe7b95ed4e';
+
+const acceptedDomains = [
+  'm.media-amazon.com',
+  'i.ebayimg.com',
+  'cdn.shopify.com',
+  'images.unsplash.com',
+  's3.amazonaws.com',
+  'cdn.sanity.io',
+  'files.wordpress.com',
+  'lh3.googleusercontent.com',
+  'media.giphy.com',
+  'i.imgur.com',
+  'pbs.twimg.com',
+  'cdn.pixabay.com',
+  'upload.wikimedia.org',
+  'cdn.vox-cdn.com',
+  'static1.squarespace.com',
+  'static.flickr.com',
+  'media-exp1.licdn.com',
+  'assets.website-files.com',
+  'images.squarespace-cdn.com',
+  'media-prod.fangoria.com',
+  'i.etsystatic.com'
+];
 
 const firebaseConfig = {
   apiKey: "AIzaSyATNt-j2Xd9xinTWFO8xUyQ8oo5eMhMS0I",
@@ -61,6 +86,15 @@ interface Movie {
   dailyResidualPayments: DailyPayment[];
 }
 
+function isDomainAllowed(url) {
+  try {
+    const domain = new URL(url).hostname;
+    return acceptedDomains.includes(domain);
+  } catch (error) {
+    return false;
+  }
+}
+
 function AppContent() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showCreateMovieForm, setShowCreateMovieForm] = useState(false);
@@ -70,6 +104,37 @@ function AppContent() {
   const [crewMembers, setCrewMembers] = useState<CastAndCrewMember[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
   const walletAddress = useAddress();
+  const [contract, setContract] = useState<Contract | null>(null);
+
+  const renderImage = (url, alt, width, height) => {
+    if (isDomainAllowed(url)) {
+      return <Image src={url} alt={alt} width={width} height={height} />;
+    } else {
+      return <p>Unsupported image domain</p>;
+    }
+  };
+
+  useEffect(() => {
+    const initializeContract = async () => {
+      try {
+        // Request account access if needed (for MetaMask)
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Create a web3 provider
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // Create a contract instance
+        const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, contractABI, provider.getSigner());
+
+        // Set the contract instance
+        setContract(contractInstance);
+      } catch (error) {
+        console.error('Error initializing contract:', error);
+      }
+    };
+
+    initializeContract();
+  }, []);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -139,11 +204,26 @@ function AppContent() {
     if (newMovie) {
       const movieToSubmit = {
         ...newMovie,
-        castAndCrew: castMembers
+        castAndCrew: castMembers,
+        owner: walletAddress
       };
       handleCreateMovie(movieToSubmit as Movie);
     }
     window.location.reload()
+  };
+
+  const hitContract = async () => {
+    if (contract) {
+      try {
+        const result = await contract.movieStudio();
+        console.log('Contract response:', result);
+        // Handle the result here (e.g., displaying it in the UI)
+      } catch (error) {
+        console.error('Error interacting with contract:', error);
+      }
+    } else {
+      console.log('Contract not initialized');
+    }
   };
   
   const handleCreateMovie = async (movie: Movie) => {
@@ -249,12 +329,7 @@ function AppContent() {
       <div className="text-gray-800 bg-white p-24">
         <h1 className="text-4xl font-bold mb-5">{selectedMovie.projectName}</h1>
         <div>
-          <Image
-            src={selectedMovie.photoUrl}
-            alt={selectedMovie.projectName}
-            width={200}
-            height={200}
-          />
+          {renderImage(selectedMovie.photoUrl, selectedMovie.projectName, 200, 200)}
         </div>
         <h2 className="text-2xl font-bold mt-4">Cast & Crew</h2>
         <ul>
@@ -304,10 +379,17 @@ function AppContent() {
           />
           <ConnectWallet className="" theme="dark" />
         </div>
-        <div>{walletAddress}</div>
 
         {walletAddress ? (
           <>
+            {/* 
+            <button 
+              onClick={hitContract} 
+              className="my-2 bg-purple-500 py-2 px-4 text-white rounded hover:bg-purple-600"
+            >
+              Hit Contract
+            </button>
+            */}
             <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
               Create New Project
             </button>
@@ -323,13 +405,7 @@ function AppContent() {
                       onClick={() => setSelectedMovie(movie)}
                     >
                       <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
-                      <Image
-                        src={movie.photoUrl}
-                        alt={movie.projectName}
-                        width={100}
-                        height={100}
-                        className="rounded-xl mb-2"
-                      />
+                      {renderImage(movie.photoUrl, movie.projectName, 100, 100)}
                       <p>Total Paid: 0 ETH</p>
                     </div>
                   ))}
@@ -346,13 +422,7 @@ function AppContent() {
                   onClick={() => setSelectedMovie(movie)}
                 >
                   <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
-                  <Image
-                    src={movie.photoUrl}
-                    alt={movie.projectName}
-                    width={100}
-                    height={100}
-                    className="rounded-xl mb-2"
-                  />
+                  {renderImage(movie.photoUrl, movie.projectName, 100, 100)}
                   <p>Total Paid: 0 ETH</p>
                 </div>
               ))}
