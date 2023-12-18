@@ -1,4 +1,5 @@
 'use client';
+import { ethers } from 'ethers';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
@@ -356,7 +357,7 @@ function AppContent() {
             </div>
           </>
         ) : (
-          <h2 className="text-blue-500 italic text-xl mt-10 mb-4">Connect an ETH wallet above to get started!</h2>
+          <h2 className="text-blue-500 italic text-xl mt-10 mb-4">Connect an ETH wallet above to get started! On certain browsers, you may have to reload the page after you sign in.</h2>
         )}
       </main>
 
