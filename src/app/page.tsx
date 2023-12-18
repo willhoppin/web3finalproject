@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
 import mockData from '../../mockdata.json'; // Importing the mock data
@@ -79,9 +79,19 @@ function AppContent() {
       });
       setMovies(moviesArray);
     };
-
+  
     fetchMovies();
-  }, []);
+  }, [walletAddress]); // Add walletAddress as a dependency
+
+  const prevWalletAddressRef = useRef(walletAddress);
+
+  useEffect(() => {
+    // Check if the wallet address changed from a defined state (not on initial mount)
+    if (prevWalletAddressRef.current !== undefined && prevWalletAddressRef.current !== walletAddress) {
+      window.location.reload();
+    }
+    prevWalletAddressRef.current = walletAddress;
+  }, [walletAddress]);
 
   const addCrewMember = () => {
     const newCrewMember = { name: '', points: 0, walletAddress: '' };
@@ -292,50 +302,64 @@ function AppContent() {
           />
           <ConnectWallet className="" theme="dark" />
         </div>
-        <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
-          Create New Project
-        </button>
-        <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Your Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.filter(movie => movie.owner === walletAddress).map((movie) => (
-            <div
-              key={movie.projectName}
-              className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
-              onClick={() => setSelectedMovie(movie)}
-            >
-              <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
-              <Image
-                src={movie.photoUrl}
-                alt={movie.projectName}
-                width={100}
-                height={100}
-                className="rounded-xl mb-2"
-              />
-              <p>Total Paid: 0 ETH</p>
+
+        {walletAddress ? (
+          <>
+            <button onClick={() => setShowCreateMovieForm(true)} className="mb-5 bg-blue-500 py-2 px-4 text-white rounded hover:bg-blue-600">
+              Create New Project
+            </button>
+            
+            {movies.some(movie => movie.owner === walletAddress) && (
+              <>
+                <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Your Projects</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {movies.filter(movie => movie.owner === walletAddress).map((movie) => (
+                    <div
+                      key={movie.projectName}
+                      className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
+                      onClick={() => setSelectedMovie(movie)}
+                    >
+                      <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
+                      <Image
+                        src={movie.photoUrl}
+                        alt={movie.projectName}
+                        width={100}
+                        height={100}
+                        className="rounded-xl mb-2"
+                      />
+                      <p>Total Paid: 0 ETH</p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Global Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {movies.filter(movie => movie.owner !== walletAddress).map((movie) => (
+                <div
+                  key={movie.projectName}
+                  className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
+                  onClick={() => setSelectedMovie(movie)}
+                >
+                  <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
+                  <Image
+                    src={movie.photoUrl}
+                    alt={movie.projectName}
+                    width={100}
+                    height={100}
+                    className="rounded-xl mb-2"
+                  />
+                  <p>Total Paid: 0 ETH</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Global Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.filter(movie => movie.owner !== walletAddress).map((movie) => (
-            <div
-              key={movie.projectName}
-              className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
-              onClick={() => setSelectedMovie(movie)}
-            >
-              <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
-              <Image
-                src={movie.photoUrl}
-                alt={movie.projectName}
-                width={100}
-                height={100}
-                className="rounded-xl mb-2"
-              />
-              <p>Total Paid: 0 ETH</p>
-            </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <h2 className="text-blue-500 italic text-xl mt-10 mb-4">Connect an ETH wallet above to get started!</h2>
+        )}
       </main>
+
     </ThirdwebProvider>
   );
 }
