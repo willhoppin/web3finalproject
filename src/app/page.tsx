@@ -43,6 +43,7 @@ interface Movie {
   photoUrl: string;
   projectType: string;
   genre: string;
+  owner: string;
   budget: number;
   generateReceiptsWalletID: string;
   appleTVProjectID: string;
@@ -295,8 +296,12 @@ export default function Home() {
         </button>
         <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Your Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.map((movie) => (
-            <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
+          {movies.filter(movie => movie.owner === '0xC4dA5CFeAcA98Bc7Cf41897F1E9384eD983FF34f').map((movie) => (
+            <div
+              key={movie.projectName}
+              className="rounded-lg border border-blue-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
+              onClick={() => setSelectedMovie(movie)}
+            >
               <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
               <Image
                 src={movie.photoUrl}
@@ -311,8 +316,12 @@ export default function Home() {
         </div>
         <h2 className="text-blue-500 font-bold text-xl mt-10 mb-4">Global Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {movies.map((movie) => (
-            <div key={movie.projectName} className="rounded-lg border border-gray-300 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer" onClick={() => setSelectedMovie(movie)}>
+          {movies.filter(movie => movie.owner !== '0xC4dA5CFeAcA98Bc7Cf41897F1E9384eD983FF34f').map((movie) => (
+            <div
+              key={movie.projectName}
+              className="rounded-lg border border-red-500 p-4 hover:border-gray-400 hover:shadow-lg cursor-pointer"
+              onClick={() => setSelectedMovie(movie)}
+            >
               <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
               <Image
                 src={movie.photoUrl}
