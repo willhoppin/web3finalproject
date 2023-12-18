@@ -406,7 +406,7 @@ function AppContent() {
                     >
                       <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
                       {renderImage(movie.photoUrl, movie.projectName, 100, 100)}
-                      <p>Total Paid: 0 ETH</p>
+                      <p className="mt-2">Total Paid: 0 ETH</p>
                     </div>
                   ))}
                 </div>
@@ -423,7 +423,7 @@ function AppContent() {
                 >
                   <h2 className="text-2xl font-semibold mb-2">{movie.projectName}</h2>
                   {renderImage(movie.photoUrl, movie.projectName, 100, 100)}
-                  <p>Total Paid: 0 ETH</p>
+                  <p className="mt-2">Total Paid: 0 ETH</p>
                 </div>
               ))}
             </div>
