@@ -1,5 +1,6 @@
 'use client';
 import { ethers } from 'ethers';
+import contractABI from '../../abi.json'; // Path to your contract's ABI
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ThirdwebProvider, ConnectWallet } from "@thirdweb-dev/react";
@@ -303,6 +304,7 @@ function AppContent() {
           />
           <ConnectWallet className="" theme="dark" />
         </div>
+        <div>{walletAddress}</div>
 
         {walletAddress ? (
           <>
