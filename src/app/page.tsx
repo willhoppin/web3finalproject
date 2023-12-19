@@ -106,6 +106,7 @@ function AppContent() {
   const walletAddress = useAddress();
   const [contract, setContract] = useState<Contract | null>(null);
   const [balance, setBalance] = useState("");
+  const [accounts, setAccounts] = useState<string[]>([]);
   const [accountIndex, setAccountIndex] = useState(0); // You can set the default index here
 
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
@@ -140,8 +141,20 @@ function AppContent() {
   
     fetchBalance();
   }, [provider, accountIndex]);
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      if (!provider) return;
+      try {
+        const fetchedAccounts = await provider.listAccounts();
+        setAccounts(fetchedAccounts);
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+      }
+    };
   
-  
+    fetchAccounts();
+  }, [provider]);  
 
   useEffect(() => {
     const initializeContract = async () => {
@@ -371,9 +384,9 @@ function AppContent() {
         </div>
         <h2 className="text-2xl font-bold mt-4">Cast & Crew</h2>
         <ul>
-          {selectedMovie.castAndCrew.map(member => (
-            <li key={member.walletAddress}>
-              {member.name} - Points: {member.points} - Wallet: {member.walletAddress}
+          {selectedMovie.castAndCrew.map((member, index) => (
+            <li key={index}>
+              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'}
             </li>
           ))}
         </ul>
@@ -416,11 +429,6 @@ function AppContent() {
             height={100}
           />
           <ConnectWallet className="" theme="dark" />
-        </div>
-
-        <div>
-          <h3>Balance of Account at Index {accountIndex}</h3>
-          <p>{balance ? `${balance} ETH` : 'Loading...'}</p>
         </div>
 
         {walletAddress ? (
