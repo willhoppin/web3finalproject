@@ -12,8 +12,6 @@ import { addDoc } from 'firebase/firestore';
 import { useAddress } from '@thirdweb-dev/react';
 
 const CONTRACT_ADDRESS = '0x518fbcfb83832ff840c73f1f572937fe7b95ed4e';
-const SPECIFIC_ADDRESS = '0x9FBE93345eeECE98E481D56F691f3093e55495d4';
-
 
 const acceptedDomains = [
   'm.media-amazon.com',
