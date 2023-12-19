@@ -386,7 +386,7 @@ function AppContent() {
         <ul>
           {selectedMovie.castAndCrew.map((member, index) => (
             <li key={index}>
-              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - Paid: 
+              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - <span className="font-bold">Paid: </span>
             </li>
           ))}
         </ul>
