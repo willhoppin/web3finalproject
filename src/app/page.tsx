@@ -108,6 +108,8 @@ function AppContent() {
   const [balance, setBalance] = useState("");
   const [accounts, setAccounts] = useState<string[]>([]);
   const [accountIndex, setAccountIndex] = useState(0); // You can set the default index here
+  const [memberBalances, setMemberBalances] = useState({});
+
 
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
@@ -118,6 +120,29 @@ function AppContent() {
       return <p>Unsupported image domain</p>;
     }
   };
+
+  // Function to fetch balances
+  const fetchMemberBalances = async (members) => {
+    const balances = {};
+    for (const member of members) {
+      try {
+        const address = accounts[Number(member.walletAddress)];
+        const balance = address ? await provider.getBalance(address) : '0';
+        balances[member.walletAddress] = ethers.utils.formatEther(balance);
+      } catch (error) {
+        console.error('Error fetching balance for address', member.walletAddress, error);
+        balances[member.walletAddress] = 'Error';
+      }
+    }
+    setMemberBalances(balances);
+  };
+
+  // useEffect to call fetchMemberBalances when selectedMovie changes
+  useEffect(() => {
+    if (selectedMovie && selectedMovie.castAndCrew) {
+      fetchMemberBalances(selectedMovie.castAndCrew);
+    }
+  }, [selectedMovie, accounts, provider]);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -386,12 +411,10 @@ function AppContent() {
         <ul>
           {selectedMovie.castAndCrew.map((member, index) => (
             <li key={index}>
-              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - <span className="font-bold">Paid: </span>
+              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - <span className="font-bold">Paid: {memberBalances[member.walletAddress] || 'Loading...'} ETH</span>
             </li>
           ))}
         </ul>
-        <h2 className="text-2xl font-bold mt-4">Residual Payments</h2>
-        <h2 className="italic font-bold mt-4">NOTE: ADD STUFF HERE FROM CHAIN...</h2>
         {/* Dynamic Fields for Cast 
         <ul>
           {selectedMovie.dailyResidualPayments.map(day => (
