@@ -12,6 +12,8 @@ import { addDoc } from 'firebase/firestore';
 import { useAddress } from '@thirdweb-dev/react';
 
 const CONTRACT_ADDRESS = '0x518fbcfb83832ff840c73f1f572937fe7b95ed4e';
+const SPECIFIC_ADDRESS = '0x9FBE93345eeECE98E481D56F691f3093e55495d4';
+
 
 const acceptedDomains = [
   'm.media-amazon.com',
@@ -105,6 +107,10 @@ function AppContent() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const walletAddress = useAddress();
   const [contract, setContract] = useState<Contract | null>(null);
+  const [balance, setBalance] = useState("");
+  const [accountIndex, setAccountIndex] = useState(0); // You can set the default index here
+
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
   const renderImage = (url: string, alt: string, width: number, height: number) => {
     if (isDomainAllowed(url)) {
@@ -115,26 +121,60 @@ function AppContent() {
   };
 
   useEffect(() => {
+    const fetchBalance = async () => {
+      if (!provider) return;
+  
+      try {
+        const accounts = await provider.listAccounts();
+        if (accounts.length > accountIndex) {
+          const selectedAccount = accounts[accountIndex];
+          const balance = await provider.getBalance(selectedAccount);
+          setBalance(ethers.utils.formatEther(balance));
+        } else {
+          console.error('Account index out of range');
+          setBalance("Error");
+        }
+      } catch (error) {
+        console.error('Error fetching balance:', error);
+        setBalance("Error");
+      }
+    };
+  
+    fetchBalance();
+  }, [provider, accountIndex]);
+  
+  
+
+  useEffect(() => {
     const initializeContract = async () => {
       try {
-        // Request account access if needed (for MetaMask)
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-        // Create a web3 provider
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
+        // Create a provider for Ganache
+        const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+    
         // Create a contract instance
         const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, contractABI, provider.getSigner());
-
+    
         // Set the contract instance
         setContract(contractInstance);
       } catch (error) {
         console.error('Error initializing contract:', error);
       }
     };
-
+  
     initializeContract();
   }, []);
+
+  const fetchContractData = async () => {
+    if (contract) {
+      try {
+        // Example: Call a function from your smart contract
+        const data = await contract.yourContractFunction();
+        // Process and use the data as needed
+      } catch (error) {
+        console.error('Error fetching data from contract:', error);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -378,6 +418,11 @@ function AppContent() {
             height={100}
           />
           <ConnectWallet className="" theme="dark" />
+        </div>
+
+        <div>
+          <h3>Balance of Account at Index {accountIndex}</h3>
+          <p>{balance ? `${balance} ETH` : 'Loading...'}</p>
         </div>
 
         {walletAddress ? (
