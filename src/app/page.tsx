@@ -122,19 +122,22 @@ function AppContent() {
   };
 
   // Function to fetch balances
-  const fetchMemberBalances = async (members) => {
-    const balances = {};
+  const fetchMemberBalances = async (members: CastAndCrewMember[]) => {
+    const balances: Record<string, string> = {};  // Object with string keys and string values
     for (const member of members) {
       try {
-        const address = accounts[Number(member.walletAddress)];
-        if (address) {
-          const balanceWei = await provider.getBalance(address);
-          // Subtract 1000 ether (converted to wei) from the balance
-          const adjustedBalanceWei = balanceWei.sub(ethers.utils.parseEther("1000"));
-          balances[member.walletAddress] = ethers.utils.formatEther(adjustedBalanceWei);
-        } else {
+        // Ensure walletAddress is a valid index. If not, set balance to '0'
+        const index = Number(member.walletAddress);
+        if (isNaN(index) || index < 0 || index >= accounts.length) {
           balances[member.walletAddress] = '0';
+          continue;
         }
+
+        const address = accounts[index];
+        const balanceWei = await provider.getBalance(address);
+        // Subtract 1000 ether (converted to wei) from the balance
+        const adjustedBalanceWei = balanceWei.sub(ethers.utils.parseEther("1000"));
+        balances[member.walletAddress] = ethers.utils.formatEther(adjustedBalanceWei);
       } catch (error) {
         console.error('Error fetching balance for address', member.walletAddress, error);
         balances[member.walletAddress] = 'Error';
