@@ -127,8 +127,14 @@ function AppContent() {
     for (const member of members) {
       try {
         const address = accounts[Number(member.walletAddress)];
-        const balance = address ? await provider.getBalance(address) : '0';
-        balances[member.walletAddress] = ethers.utils.formatEther(balance);
+        if (address) {
+          const balanceWei = await provider.getBalance(address);
+          // Subtract 1000 ether (converted to wei) from the balance
+          const adjustedBalanceWei = balanceWei.sub(ethers.utils.parseEther("1000"));
+          balances[member.walletAddress] = ethers.utils.formatEther(adjustedBalanceWei);
+        } else {
+          balances[member.walletAddress] = '0';
+        }
       } catch (error) {
         console.error('Error fetching balance for address', member.walletAddress, error);
         balances[member.walletAddress] = 'Error';
@@ -136,6 +142,7 @@ function AppContent() {
     }
     setMemberBalances(balances);
   };
+  
 
   // useEffect to call fetchMemberBalances when selectedMovie changes
   useEffect(() => {
@@ -199,18 +206,6 @@ function AppContent() {
   
     initializeContract();
   }, []);
-
-  const fetchContractData = async () => {
-    if (contract) {
-      try {
-        // Example: Call a function from your smart contract
-        const data = await contract.yourContractFunction();
-        // Process and use the data as needed
-      } catch (error) {
-        console.error('Error fetching data from contract:', error);
-      }
-    }
-  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -411,7 +406,7 @@ function AppContent() {
         <ul>
           {selectedMovie.castAndCrew.map((member, index) => (
             <li key={index}>
-              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - <span className="font-bold">Paid: {memberBalances[member.walletAddress] || 'Loading...'} ETH</span>
+              {member.name} - Wallet: {accounts[Number(member.walletAddress)] || 'Address not found'} - <span className="font-bold">Paid: {memberBalances[member.walletAddress] || 'Loading...'} ETH to Date</span>
             </li>
           ))}
         </ul>
